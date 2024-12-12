@@ -8,16 +8,12 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "variables_globales")
+@Table(name = "perfil")
 @Data
-public class GlobalVariableModel {
-	
+public class PerfilModel {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
 	private String nombre;
-	
-	private String valor;
-	
 }
