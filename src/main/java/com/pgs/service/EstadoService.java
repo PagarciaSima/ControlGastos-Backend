@@ -22,6 +22,10 @@ public class EstadoService {
 		return this.estadoRepository.findAll(Sort.by("id").descending());
 	}
 	
+	public List<EstadoModel> listarParaGastos(List<Long> id) {
+		return this.estadoRepository.findByIdIn(id);
+	}
+	
 	public void guardar (EstadoModel modelo) {
 		this.estadoRepository.save(modelo);
 	}
