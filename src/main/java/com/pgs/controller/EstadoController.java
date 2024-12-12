@@ -14,11 +14,11 @@ import com.pgs.service.EstadoService;
 
 @RestController
 @RequestMapping("/api/v1")
-public class EstadosController {
+public class EstadoController {
 	
 	private EstadoService estadoService;
 
-	public EstadosController(EstadoService estadoService) {
+	public EstadoController(EstadoService estadoService) {
 		this.estadoService = estadoService;
 	}
 	
