@@ -18,6 +18,10 @@ public class GastoFijoService {
 		this.gastoFijoRepository = gastoFijoRepository;
 	}
 	
+	public List<GastoFijoModel> listarPorMesYanio(Integer mes, Integer anio) {
+		return this.gastoFijoRepository.findAllByMonth(mes, anio);
+	}
+	
 	public List<GastoFijoModel> listar() {
 		return this.gastoFijoRepository.findAll(Sort.by("id").descending());
 	}
