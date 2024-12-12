@@ -15,7 +15,7 @@ import lombok.Data;
 @Entity
 @Table(name = "gastos_por_dia")
 @Data
-public class GastosPorDiaModel {
+public class GastoPorDiaModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,11 +32,11 @@ public class GastosPorDiaModel {
 	@JoinColumn(name = "proveedores_id")
 	private ProveedorModel proveedoresId;
 	
-	public GastosPorDiaModel() {
+	public GastoPorDiaModel() {
 		super();
 	}
 
-	public GastosPorDiaModel(Long neto, Long iva, Long total, Date fecha, String descripcion,
+	public GastoPorDiaModel(Long neto, Long iva, Long total, Date fecha, String descripcion,
 			ProveedorModel proveedoresId) {
 		super();
 		this.neto = neto;
