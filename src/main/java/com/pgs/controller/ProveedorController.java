@@ -1,16 +1,18 @@
 package com.pgs.controller;
 
-import java.util.HashMap;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pgs.constantes.ControlGastosConstants;
+import com.pgs.dto.ProveedorRequestDto;
 import com.pgs.model.ProveedorModel;
+import com.pgs.service.ComunService;
 import com.pgs.service.ProveedorService;
 
 @RestController
@@ -18,9 +20,11 @@ import com.pgs.service.ProveedorService;
 public class ProveedorController {
 	
 	private ProveedorService proveedorService;
+	private ComunService comunService;
 
-	public ProveedorController(ProveedorService proveedorService) {
+	public ProveedorController(ProveedorService proveedorService, ComunService comunService) {
 		this.proveedorService = proveedorService;
+		this.comunService = comunService;
 	}
 	
 	@GetMapping("/proveedores")
@@ -32,18 +36,22 @@ public class ProveedorController {
 	public ResponseEntity<?> getProveedorById(@PathVariable (name = "id") Long id) {
 		ProveedorModel proveedor = this.proveedorService.buscarPorId(id);
 		if(null == proveedor) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new HashMap<String, String> () {
-
-				private static final long serialVersionUID = 1L;
-
-				{
-					put("estado", HttpStatus.BAD_REQUEST.toString());
-					put("mensaje", ControlGastosConstants.NO_ENCONTRADO + " (ID = " + id + ")");
-				}
-			});
+			return comunService.getResponseEntity(ControlGastosConstants.NO_ENCONTRADO + " (ID = " + id + ")");
 		} else {
 			return ResponseEntity.status(HttpStatus.OK).body(proveedor);
 		}
 	}
+	
+	@PostMapping("/proveedores")
+	public ResponseEntity<?> postProveedor(@RequestBody ProveedorRequestDto dto) {
+		try {
+			this.proveedorService.guardar(new ProveedorModel(dto.getNombre()));
+			return comunService.getResponseEntity(ControlGastosConstants.EXITO_CREAR_REGISTRO);
+		} catch (Exception e) {
+			return comunService.getResponseEntity(ControlGastosConstants.ERROR_INESPERADO);
+		}
+	}
+
+	
 	
 }

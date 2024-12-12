@@ -13,9 +13,6 @@ public class HomeController {
 	@GetMapping("/")
 	public ResponseEntity<?> getHome() {
 		return ResponseEntity.status(HttpStatus.OK).body(new HashMap<String, String>() {
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 
 			{
