@@ -1,5 +1,6 @@
 package com.pgs.error;
 
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,15 @@ public class ApiExceptionHandler {
 	@ExceptionHandler(HttpMessageNotReadableException.class)
 	public ResponseEntity<ApiErrorResponse> httpMessageNotReadableException (
 			HttpMessageNotReadableException ex, HttpServletRequest request
+	) {
+		ApiErrorResponse apiErrorResponse = new ApiErrorResponse(400, ControlGastosConstants.MAL_FORMADA);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).contentType(MediaType.APPLICATION_JSON)
+				.body(apiErrorResponse);
+	}
+	
+	@ExceptionHandler(InvalidDataAccessApiUsageException.class)
+	public ResponseEntity<ApiErrorResponse> invalidDataAccessApiUsageException (
+			InvalidDataAccessApiUsageException ex, HttpServletRequest request
 	) {
 		ApiErrorResponse apiErrorResponse = new ApiErrorResponse(400, ControlGastosConstants.MAL_FORMADA);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).contentType(MediaType.APPLICATION_JSON)

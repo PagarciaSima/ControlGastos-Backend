@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -79,6 +80,21 @@ public class GastoFijoController {
 				return comunService.getResponseEntity(HttpStatus.BAD_REQUEST, ControlGastosConstants.ERROR_INESPERADO);
 			}
 		}
+	}
+	
+	@PutMapping("/gastos-fijos/{id}")
+	public ResponseEntity<?> putGastosFijos(@PathVariable ("id") Long id, @RequestBody GastosFijosRequestDto dto) {
+		GastoFijoModel gastosFijos = gastoFijoService.buscarPorId(id);
+		ProveedorModel proveedor = this.proveedorService.buscarPorId(dto.getProveedoresId());
+		if (null == gastosFijos || null == proveedor)
+			return comunService.getResponseEntity(HttpStatus.BAD_REQUEST, ControlGastosConstants.ERROR_INESPERADO);
+		gastosFijos.setNombre(dto.getNombre());
+		gastosFijos.setEstadosId(this.estadoService.buscarPorId(dto.getEstadosId()));
+		gastosFijos.setMonto(dto.getMonto());
+		gastosFijos.setProveedoresId(proveedor);
+		this.gastoFijoService.guardar(gastosFijos);
+		return comunService.getResponseEntity(HttpStatus.CREATED, ControlGastosConstants.EXITO_CREAR_REGISTRO);	
+			
 	}
 
 }
