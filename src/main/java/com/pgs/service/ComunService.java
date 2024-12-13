@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class ComunService {
 
-	public ResponseEntity<?> getResponseEntity(String mensaje) {
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new HashMap<String, String> () {
+	public ResponseEntity<?> getResponseEntity(HttpStatus httpStatus, String mensaje) {
+		return ResponseEntity.status(httpStatus).body(new HashMap<String, String> () {
 
 			private static final long serialVersionUID = 1L;
 

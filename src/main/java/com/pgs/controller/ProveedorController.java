@@ -37,7 +37,10 @@ public class ProveedorController {
 	public ResponseEntity<?> getProveedorById(@PathVariable (name = "id") Long id) {
 		ProveedorModel proveedor = this.proveedorService.buscarPorId(id);
 		if(null == proveedor) {
-			return comunService.getResponseEntity(ControlGastosConstants.NO_ENCONTRADO + " (ID = " + id + ")");
+			return comunService.getResponseEntity(
+					HttpStatus.NOT_FOUND, 
+					ControlGastosConstants.NO_ENCONTRADO + " (Proveedor ID = " + id + ")"
+			);
 		} else {
 			return ResponseEntity.status(HttpStatus.OK).body(proveedor);
 		}
@@ -47,9 +50,12 @@ public class ProveedorController {
 	public ResponseEntity<?> postProveedor(@RequestBody ProveedorRequestDto dto) {
 		try {
 			this.proveedorService.guardar(new ProveedorModel(dto.getNombre()));
-			return comunService.getResponseEntity(ControlGastosConstants.EXITO_CREAR_REGISTRO);
+			return comunService.getResponseEntity(
+					HttpStatus.CREATED,
+					ControlGastosConstants.EXITO_CREAR_REGISTRO			
+			);
 		} catch (Exception e) {
-			return comunService.getResponseEntity(ControlGastosConstants.ERROR_INESPERADO);
+			return comunService.getResponseEntity(HttpStatus.BAD_REQUEST, ControlGastosConstants.ERROR_INESPERADO);
 		}
 	}
 
@@ -59,10 +65,13 @@ public class ProveedorController {
 		if (proveedor != null) {
 			proveedor.setNombre(dto.getNombre());
 			proveedorService.guardar(proveedor);
-			return comunService.getResponseEntity(ControlGastosConstants.EXITO_ACTUALIZAR_REGISTRO);
+			return comunService.getResponseEntity(HttpStatus.CREATED, ControlGastosConstants.EXITO_ACTUALIZAR_REGISTRO);
 
 		} else {
-			return comunService.getResponseEntity(ControlGastosConstants.NO_ENCONTRADO + " (ID = " + id + ")");
+			return comunService.getResponseEntity(
+					HttpStatus.NOT_FOUND, 
+					ControlGastosConstants.NO_ENCONTRADO + " (ID = " + id + ")"
+			);
 		}
 	}
 	
