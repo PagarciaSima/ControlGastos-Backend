@@ -22,6 +22,10 @@ public class GastoPorDiaService {
 		return this.gastoPorDiaResitory.findAll(Sort.by("id").descending());
 	}
 	
+	public List<GastoPorDiaModel> listarPorAnioMes(Integer mes, Integer anio) {
+		return this.gastoPorDiaResitory.findAllByMonth(mes, anio);
+	}
+	
 	public void guardar (GastoPorDiaModel modelo) {
 		this.gastoPorDiaResitory.save(modelo);
 	}
