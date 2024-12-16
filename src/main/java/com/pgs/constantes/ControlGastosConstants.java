@@ -12,5 +12,7 @@ public class ControlGastosConstants {
 	public static final String EXITO_ACTUALIZAR_REGISTRO = "Registro actualizado con éxito.";
 	public static final String EXITO_ELIMINAR = "Registro eliminado con éxito.";
 	public static final Long SECRET_JWT = 2L;
+	public static final String EMAIL_REPETIDO = "Ya existe un usuario registrado con el e-mail ingresado.";
+	public static final Long PERFIL_USUARIO = 2L;
 
 }
