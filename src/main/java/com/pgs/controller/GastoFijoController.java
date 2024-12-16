@@ -19,28 +19,26 @@ import com.pgs.constantes.ControlGastosConstants;
 import com.pgs.dto.GastosFijosRequestDto;
 import com.pgs.model.GastoFijoModel;
 import com.pgs.model.ProveedorModel;
-import com.pgs.service.ComunService;
-import com.pgs.service.EstadoService;
-import com.pgs.service.GastoFijoService;
-import com.pgs.service.ProveedorService;
+import com.pgs.service.ComunServiceImpl;
+import com.pgs.service.EstadoServiceImpl;
+import com.pgs.service.GastoFijoServiceImpl;
+import com.pgs.service.IEstadoService;
+import com.pgs.service.IGastoFijoService;
+import com.pgs.service.IProveedorService;
+import com.pgs.service.ProveedorServiceImpl;
+
+import lombok.AllArgsConstructor;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/v1")
+@AllArgsConstructor
 public class GastoFijoController {
 	
-	private GastoFijoService gastoFijoService;
-	private EstadoService estadoService;
-	private ProveedorService proveedorService;
-	private ComunService comunService;
-
-	public GastoFijoController(GastoFijoService gastoFijoService, EstadoService estadoService,
-			ProveedorService proveedorService, ComunService comunService) {
-		this.gastoFijoService = gastoFijoService;
-		this.estadoService = estadoService;
-		this.proveedorService = proveedorService;
-		this.comunService = comunService;
-	}
+	private IGastoFijoService gastoFijoService;
+	private IEstadoService estadoService;
+	private IProveedorService proveedorService;
+	private ComunServiceImpl comunService;
 
 	@GetMapping("/gastos-fijos")
 	public ResponseEntity<?> getAllGastosFijosMesEnCurso() {

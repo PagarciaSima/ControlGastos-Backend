@@ -10,22 +10,21 @@ import org.springframework.stereotype.Service;
 
 import com.pgs.constantes.ControlGastosConstants;
 import com.pgs.model.UsuarioModel;
-import com.pgs.service.VariableGlobalService;
+import com.pgs.service.IVariableGlobalService;
+import com.pgs.service.VariableGlobalServiceImpl;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.AllArgsConstructor;
 
 @Service
+@AllArgsConstructor
 public class JwtService {
 
-	private VariableGlobalService variableGlobalService;
-	
-	public JwtService (VariableGlobalService variableGlobalService) {
-		this.variableGlobalService = variableGlobalService;
-	}
+	private IVariableGlobalService variableGlobalService;
 	
 	public String generateToken (String username) {
 		Map<String, Object> claims = new HashMap<>();

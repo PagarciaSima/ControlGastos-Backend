@@ -19,27 +19,23 @@ import com.pgs.constantes.ControlGastosConstants;
 import com.pgs.dto.GastoPorDiaDto;
 import com.pgs.model.GastoPorDiaModel;
 import com.pgs.model.ProveedorModel;
-import com.pgs.service.ComunService;
-import com.pgs.service.GastoPorDiaService;
-import com.pgs.service.ProveedorService;
+import com.pgs.service.ComunServiceImpl;
+import com.pgs.service.GastoPorDiaServiceImpl;
+import com.pgs.service.IGastoPorDiaService;
+import com.pgs.service.IProveedorService;
+import com.pgs.service.ProveedorServiceImpl;
+
+import lombok.AllArgsConstructor;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/v1")
+@AllArgsConstructor
 public class GastoPorDiaController {
 	
-	private GastoPorDiaService gastoPorDiaService;
-	private ProveedorService proveedorService;
-	private ComunService comunService;
-
-	public GastoPorDiaController (GastoPorDiaService gastoPorDiaService,
-			ProveedorService proveedorService,
-			ComunService comunService
-	) {
-		this.gastoPorDiaService = gastoPorDiaService;
-		this.proveedorService = proveedorService;
-		this.comunService = comunService;
-	}
+	private IGastoPorDiaService gastoPorDiaService;
+	private IProveedorService proveedorService;
+	private ComunServiceImpl comunService;
 	
 	@GetMapping("/gastos-por-dia")
 	public ResponseEntity<?> getAllGastosPorDiaMesEnCurso() {

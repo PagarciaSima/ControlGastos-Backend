@@ -11,18 +11,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pgs.constantes.ControlGastosConstants;
-import com.pgs.service.EstadoService;
+import com.pgs.service.EstadoServiceImpl;
+import com.pgs.service.IEstadoService;
+
+import lombok.AllArgsConstructor;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/v1")
+@AllArgsConstructor
 public class EstadoController {
 	
-	private EstadoService estadoService;
-
-	public EstadoController(EstadoService estadoService) {
-		this.estadoService = estadoService;
-	}
+	private IEstadoService estadoService;
 	
 	@GetMapping("/estados")
 	public ResponseEntity<?> getAllEstados() {

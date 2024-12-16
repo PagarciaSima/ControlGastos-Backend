@@ -9,32 +9,36 @@ import org.springframework.stereotype.Service;
 import com.pgs.model.GastoFijoModel;
 import com.pgs.repository.IGastoFijoResitory;
 
+import lombok.AllArgsConstructor;
+
 @Service
-public class GastoFijoService {
+@AllArgsConstructor
+public class GastoFijoServiceImpl implements IGastoFijoService {
 
 	private IGastoFijoResitory gastoFijoRepository;
-
-	public GastoFijoService(IGastoFijoResitory gastoFijoRepository) {
-		this.gastoFijoRepository = gastoFijoRepository;
-	}
 	
+	@Override
 	public List<GastoFijoModel> listarPorMesYanio(Integer mes, Integer anio) {
 		return this.gastoFijoRepository.findAllByMonth(mes, anio);
 	}
 	
+	@Override
 	public List<GastoFijoModel> listar() {
 		return this.gastoFijoRepository.findAll(Sort.by("id").descending());
 	}
 	
+	@Override
 	public void guardar (GastoFijoModel modelo) {
 		this.gastoFijoRepository.save(modelo);
 	}
 	
+	@Override
 	public GastoFijoModel buscarPorId(Long id) {
 		Optional<GastoFijoModel> optional = this.gastoFijoRepository.findById(id);
 		return optional.isPresent() ? optional.get() : null;
 	}
 	
+	@Override
 	public void eliminar(Long id) {
 		this.gastoFijoRepository.deleteById(id);
 	}

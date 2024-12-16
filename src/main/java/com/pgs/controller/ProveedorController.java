@@ -14,21 +14,20 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pgs.constantes.ControlGastosConstants;
 import com.pgs.dto.ProveedorRequestDto;
 import com.pgs.model.ProveedorModel;
-import com.pgs.service.ComunService;
-import com.pgs.service.ProveedorService;
+import com.pgs.service.ComunServiceImpl;
+import com.pgs.service.IProveedorService;
+import com.pgs.service.ProveedorServiceImpl;
+
+import lombok.AllArgsConstructor;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/v1")
+@AllArgsConstructor
 public class ProveedorController {
 	
-	private ProveedorService proveedorService;
-	private ComunService comunService;
-
-	public ProveedorController(ProveedorService proveedorService, ComunService comunService) {
-		this.proveedorService = proveedorService;
-		this.comunService = comunService;
-	}
+	private IProveedorService proveedorService;
+	private ComunServiceImpl comunService;
 	
 	@GetMapping("/proveedores")
 	public ResponseEntity<?> getAllProveedores() {

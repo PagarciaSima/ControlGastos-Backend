@@ -10,7 +10,8 @@ import org.springframework.stereotype.Service;
 import com.pgs.constantes.ControlGastosConstants;
 import com.pgs.model.UsuarioModel;
 import com.pgs.repository.IUsuarioRepository;
-import com.pgs.service.EstadoService;
+import com.pgs.service.EstadoServiceImpl;
+import com.pgs.service.IEstadoService;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -21,7 +22,7 @@ import lombok.NoArgsConstructor;
 public class UserInfoService implements UserDetailsService{
 	
 	private IUsuarioRepository repository;
-	private EstadoService estadoService;
+	private IEstadoService estadoService;
 	
 
 	@Override

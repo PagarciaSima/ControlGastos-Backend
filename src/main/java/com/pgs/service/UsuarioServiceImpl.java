@@ -10,17 +10,15 @@ import com.pgs.constantes.ControlGastosConstants;
 import com.pgs.model.UsuarioModel;
 import com.pgs.repository.IUsuarioRepository;
 
+import lombok.AllArgsConstructor;
+
 @Service
-public class UsuarioService {
+@AllArgsConstructor
+public class UsuarioServiceImpl implements IUsuarioService {
 
 	private IUsuarioRepository usuarioRepository;
-	private EstadoService estadosService;
+	private IEstadoService estadosService;
 
-	public UsuarioService(IUsuarioRepository usuarioRepository, EstadoService estadosService) {
-		this.usuarioRepository = usuarioRepository;
-		this.estadosService = estadosService;
-	}
-	
 	public List<UsuarioModel> listar() {
 		return this.usuarioRepository.findAll(Sort.by("id").descending());
 	}
