@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.pgs.constantes.ControlGastosConstants;
 import com.pgs.model.UsuarioModel;
 import com.pgs.repository.IUsuarioRepository;
 
@@ -13,9 +14,11 @@ import com.pgs.repository.IUsuarioRepository;
 public class UsuarioService {
 
 	private IUsuarioRepository usuarioRepository;
+	private EstadoService estadosService;
 
-	public UsuarioService(IUsuarioRepository usuarioRepository) {
+	public UsuarioService(IUsuarioRepository usuarioRepository, EstadoService estadosService) {
 		this.usuarioRepository = usuarioRepository;
+		this.estadosService = estadosService;
 	}
 	
 	public List<UsuarioModel> listar() {
@@ -33,5 +36,15 @@ public class UsuarioService {
 	
 	public void eliminar(Long id) {
 		this.usuarioRepository.deleteById(id);
+	}
+	
+	public UsuarioModel buscarPorCorreo(String correo) {
+		return this.usuarioRepository.findByCorreo(correo);
+	}
+	
+	public UsuarioModel buscarPorCorreoActivo(String correo) {
+		Optional<UsuarioModel> optional = this.usuarioRepository
+				.findByCorreoAndEstadosId(correo, this.estadosService.buscarPorId(ControlGastosConstants.ESTADO_ACTIVO));
+		return optional.isPresent() ? optional.get() : null;
 	}
 }
