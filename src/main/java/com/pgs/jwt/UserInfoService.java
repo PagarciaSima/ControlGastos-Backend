@@ -12,19 +12,17 @@ import com.pgs.model.UsuarioModel;
 import com.pgs.repository.IUsuarioRepository;
 import com.pgs.service.EstadoService;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 @Service
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserInfoService implements UserDetailsService{
 	
 	private IUsuarioRepository repository;
 	private EstadoService estadoService;
 	
-	public UserInfoService (
-		IUsuarioRepository repository,
-		EstadoService estadoService
-	) {
-		this.repository = repository;
-		this.estadoService = estadoService;
-	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
