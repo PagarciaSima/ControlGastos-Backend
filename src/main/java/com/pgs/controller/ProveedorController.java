@@ -14,9 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pgs.constantes.ControlGastosConstants;
 import com.pgs.dto.ProveedorRequestDto;
 import com.pgs.model.ProveedorModel;
-import com.pgs.service.ComunServiceImpl;
+import com.pgs.service.IComunService;
 import com.pgs.service.IProveedorService;
-import com.pgs.service.ProveedorServiceImpl;
 
 import lombok.AllArgsConstructor;
 
@@ -27,7 +26,7 @@ import lombok.AllArgsConstructor;
 public class ProveedorController {
 	
 	private IProveedorService proveedorService;
-	private ComunServiceImpl comunService;
+	private IComunService comunService;
 	
 	@GetMapping("/proveedores")
 	public ResponseEntity<?> getAllProveedores() {

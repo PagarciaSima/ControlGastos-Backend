@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pgs.constantes.ControlGastosConstants;
-import com.pgs.service.EstadoServiceImpl;
 import com.pgs.service.IEstadoService;
 
 import lombok.AllArgsConstructor;

@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import com.pgs.constantes.ControlGastosConstants;
 import com.pgs.model.UsuarioModel;
 import com.pgs.service.IVariableGlobalService;
-import com.pgs.service.VariableGlobalServiceImpl;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -22,10 +21,11 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class JwtService {
+public class JwtService implements IJwtService {
 
 	private IVariableGlobalService variableGlobalService;
 	
+	@Override
 	public String generateToken (String username) {
 		Map<String, Object> claims = new HashMap<>();
 		return createToken(claims, username);
@@ -46,21 +46,25 @@ public class JwtService {
 		return Keys.hmacShaKeyFor(keyBytes);
 	}
 	
+	@Override
 	public String extractUsername(String token) {
 		return extractClaim(token, Claims::getSubject);
 		
 	}
 	
+	@Override
 	public Date extractExpiration(String token) {
 	    return extractClaim(token, Claims::getExpiration);
 	}
 	
 
+	@Override
 	public <T> T extractClaim(String token, Function <Claims, T> claimsResolver) {
 		final Claims claims = extractAllClaims(token);
 		return claimsResolver.apply(claims); // Saca solo el claim que interesa
 	}
 	
+	@Override
 	public Boolean validateToken(String token, UsuarioModel userDetails) {
 		final String username = extractUsername(token);
 		return (username.equals(userDetails.getCorreo()) && !isTokenExpired(token));

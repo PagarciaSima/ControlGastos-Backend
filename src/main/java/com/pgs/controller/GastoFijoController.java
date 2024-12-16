@@ -19,13 +19,10 @@ import com.pgs.constantes.ControlGastosConstants;
 import com.pgs.dto.GastosFijosRequestDto;
 import com.pgs.model.GastoFijoModel;
 import com.pgs.model.ProveedorModel;
-import com.pgs.service.ComunServiceImpl;
-import com.pgs.service.EstadoServiceImpl;
-import com.pgs.service.GastoFijoServiceImpl;
+import com.pgs.service.IComunService;
 import com.pgs.service.IEstadoService;
 import com.pgs.service.IGastoFijoService;
 import com.pgs.service.IProveedorService;
-import com.pgs.service.ProveedorServiceImpl;
 
 import lombok.AllArgsConstructor;
 
@@ -38,7 +35,7 @@ public class GastoFijoController {
 	private IGastoFijoService gastoFijoService;
 	private IEstadoService estadoService;
 	private IProveedorService proveedorService;
-	private ComunServiceImpl comunService;
+	private IComunService comunService;
 
 	@GetMapping("/gastos-fijos")
 	public ResponseEntity<?> getAllGastosFijosMesEnCurso() {

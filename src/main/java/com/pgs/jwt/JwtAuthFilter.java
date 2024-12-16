@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.pgs.model.UsuarioModel;
-import com.pgs.service.UsuarioServiceImpl;
+import com.pgs.service.IUsuarioService;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -21,12 +21,12 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
 	
-	private JwtService jwtService;
-	private UsuarioServiceImpl usuarioService;
+	private IJwtService jwtService;
+	private IUsuarioService usuarioService;
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-			throws ServletException, IOException {
+			throws ServletException, IOException 	{
 		
 		String authHeader = request.getHeader("Authorization");
 		String token = null;
