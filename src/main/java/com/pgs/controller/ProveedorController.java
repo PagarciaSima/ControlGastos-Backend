@@ -19,6 +19,13 @@ import com.pgs.service.IProveedorService;
 
 import lombok.AllArgsConstructor;
 
+/**
+ * 
+ * Controller for managing providers (suppliers).
+ * Provides endpoints to get, create, and update provider data.
+ * 
+ * @author Pablo Garcia Simavilla
+ */
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/v1")
@@ -28,11 +35,22 @@ public class ProveedorController {
 	private IProveedorService proveedorService;
 	private IComunService comunService;
 	
+	/**
+     * Retrieves all providers.
+     *
+     * @return ResponseEntity containing the list of all providers.
+     */
 	@GetMapping("/proveedores")
 	public ResponseEntity<?> getAllProveedores() {
 		return ResponseEntity.status(HttpStatus.OK).body(this.proveedorService.listar());
 	}
 	
+	/**
+     * Retrieves a provider by its ID.
+     *
+     * @param id The ID of the provider to retrieve.
+     * @return ResponseEntity containing the provider data if found, or an error message if not found.
+     */
 	@GetMapping("/proveedores/{id}")
 	public ResponseEntity<?> getProveedorById(@PathVariable (name = "id") Long id) {
 		ProveedorModel proveedor = this.proveedorService.buscarPorId(id);
@@ -46,6 +64,12 @@ public class ProveedorController {
 		}
 	}
 	
+	 /**
+     * Creates a new provider.
+     *
+     * @param dto The provider data transfer object containing the provider's information.
+     * @return ResponseEntity indicating the result of the creation process (success or failure).
+     */
 	@PostMapping("/proveedores")
 	public ResponseEntity<?> postProveedor(@RequestBody ProveedorRequestDto dto) {
 		try {
@@ -59,6 +83,13 @@ public class ProveedorController {
 		}
 	}
 
+	/**
+     * Updates an existing provider by its ID.
+     *
+     * @param id  The ID of the provider to update.
+     * @param dto The provider data transfer object containing the updated provider's information.
+     * @return ResponseEntity indicating the result of the update process (success or failure).
+     */
 	@PutMapping("/proveedores/{id}")
 	public ResponseEntity<?> putProveedor(@PathVariable (name = "id") Long id, @RequestBody ProveedorRequestDto dto) {
 		ProveedorModel proveedor = this.proveedorService.buscarPorId(id);

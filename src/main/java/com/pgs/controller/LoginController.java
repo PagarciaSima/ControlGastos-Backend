@@ -21,6 +21,12 @@ import com.pgs.service.IUsuarioService;
 
 import lombok.AllArgsConstructor;
 
+/**
+ * Controller responsible for handling user login and authentication requests.
+ * Provides endpoints for user login and token generation.
+ * 
+ * @author Pablo Garcia Simavilla
+ */
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api")
@@ -32,6 +38,13 @@ public class LoginController {
 	private IJwtService jwtService;
 	private IComunService comunService;
 	
+	 /**
+     * Authenticates a user by email and password, and generates a JWT token if successful.
+     *
+     * @param dto The login data transfer object containing the user's email and password.
+     * @return ResponseEntity containing a JWT token and user details if authentication is successful, 
+     *         or an error message and HTTP status if authentication fails.
+     */
 	@PostMapping("/auth/login")
 	public ResponseEntity<?> login(@RequestBody LoginDto dto) {
 		UsuarioModel usuario = this.usuarioService.buscarPorCorreoActivo(dto.getCorreo());
@@ -51,6 +64,13 @@ public class LoginController {
 		}
 	}
 	
+	 /**
+     * Refreshes the JWT token for a user based on their ID.
+     *
+     * @param id The ID of the user whose token needs to be refreshed.
+     * @return ResponseEntity containing the new JWT token and user details if successful, 
+     *         or an error message and HTTP status if the user is not found.
+     */
 	@GetMapping("/auth/refresh/{id}")
 	public ResponseEntity<?> refresh (@PathVariable ("id") Long id){
 		UsuarioModel usuario = this.usuarioService.buscarPorId(id);

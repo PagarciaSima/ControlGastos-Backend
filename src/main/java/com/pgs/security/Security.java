@@ -26,6 +26,7 @@ import com.pgs.jwt.UserInfoService;
 @EnableMethodSecurity
 public class Security {
 
+	
 	@Autowired
 	private JwtAuthFilter authFilter;
 	
@@ -59,7 +60,8 @@ public class Security {
 	    return http
 	            .csrf(csrf -> csrf.disable())  // Deshabilitar CSRF (si es necesario)
 	            .authorizeHttpRequests(authz -> authz
-	                .requestMatchers("/api/auth/**").permitAll()  // Rutas públicas
+	                .requestMatchers("/api/auth/**").permitAll()  // Rutas públicas (login, registro, etc.)
+                    .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs", "/v3/api-docs/**", "/actuator/**").permitAll()  // Permite Swagger y OpenAPI sin autenticación
 	                .requestMatchers("/api/v1/**").authenticated()  // Rutas protegidas
 	            )
 	            .sessionManagement(session -> session
@@ -71,6 +73,10 @@ public class Security {
 	            .authenticationProvider(authenticationProvider())  // Proveedor de autenticación
 	            .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)  // Filtro de autenticación
 	            .build();
+	    
+	    
 	}
+
+	
 
 }

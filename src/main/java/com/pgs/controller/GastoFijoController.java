@@ -26,6 +26,13 @@ import com.pgs.service.IProveedorService;
 
 import lombok.AllArgsConstructor;
 
+/**
+ * 
+ * Controller for managing fixed expenses (Gastos Fijos).
+ * Provides endpoints to create, update, delete, and retrieve fixed expenses.
+ * 
+ * @author Pablo Garcia Simavilla
+ */
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/v1")
@@ -37,6 +44,11 @@ public class GastoFijoController {
 	private IProveedorService proveedorService;
 	private IComunService comunService;
 
+	/**
+     * Retrieves all fixed expenses for the current month and year.
+     *
+     * @return a {@link ResponseEntity} containing the list of fixed expenses for the current month and year.
+     */
 	@GetMapping("/gastos-fijos")
 	public ResponseEntity<?> getAllGastosFijosMesEnCurso() {
 		LocalDate fechaActual = LocalDate.now();
@@ -45,6 +57,12 @@ public class GastoFijoController {
 				.body(this.gastoFijoService.listarPorMesYanio(fechaActual.getMonthValue(), fechaActual.getYear()));
 	}
 	
+	/**
+     * Retrieves all fixed expenses for the specified month in the current year.
+     *
+     * @param mes the month to filter fixed expenses.
+     * @return a {@link ResponseEntity} containing the list of fixed expenses for the specified month.
+     */
 	@GetMapping("/gastos-fijos-por-mes/{mes}")
 	public ResponseEntity<?> getAllGastosFijosPorMes(@PathVariable ("mes") Integer mes) {
 		LocalDate fechaActual = LocalDate.now();
@@ -53,6 +71,12 @@ public class GastoFijoController {
 				.body(this.gastoFijoService.listarPorMesYanio(mes, fechaActual.getYear()));
 	}
 	
+	/**
+     * Creates a new fixed expense.
+     *
+     * @param dto the {@link GastosFijosRequestDto} containing the details of the fixed expense to create.
+     * @return a {@link ResponseEntity} indicating the success or failure of the operation.
+     */
 	@PostMapping("/gastos-fijos")
 	public ResponseEntity<?> postGastosFijos(@RequestBody GastosFijosRequestDto dto) {
 		ProveedorModel proveedor = this.proveedorService.buscarPorId(dto.getProveedoresId());
@@ -80,6 +104,13 @@ public class GastoFijoController {
 		}
 	}
 	
+	/**
+     * Updates an existing fixed expense by its ID.
+     *
+     * @param id  the ID of the fixed expense to update.
+     * @param dto the {@link GastosFijosRequestDto} containing the updated details.
+     * @return a {@link ResponseEntity} indicating the success or failure of the operation.
+     */
 	@PutMapping("/gastos-fijos/{id}")
 	public ResponseEntity<?> putGastosFijos(@PathVariable ("id") Long id, @RequestBody GastosFijosRequestDto dto) {
 		GastoFijoModel gastosFijos = gastoFijoService.buscarPorId(id);
@@ -95,6 +126,12 @@ public class GastoFijoController {
 			
 	}
 	
+	/**
+     * Deletes an existing fixed expense by its ID.
+     *
+     * @param id the ID of the fixed expense to delete.
+     * @return a {@link ResponseEntity} indicating the success or failure of the operation.
+     */
 	@DeleteMapping("/gastos-fijos/{id}")
 	public ResponseEntity<?> deleteGastosFijos(@PathVariable ("id") Long id) {
 		GastoFijoModel gastoFijo = gastoFijoService.buscarPorId(id);
