@@ -25,6 +25,13 @@ import com.pgs.service.IEstadoService;
 import com.pgs.service.IPerfilService;
 import com.pgs.service.IUsuarioService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 
 /**
@@ -45,6 +52,8 @@ import lombok.AllArgsConstructor;
 @RestController
 @RequestMapping("/api/v1")
 @AllArgsConstructor
+@Tag(name = "Users", description = "API for managing 'User' resources")
+@SecurityRequirement(name = "bearerAuth")
 public class UsuariosController {
  
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -59,6 +68,24 @@ public class UsuariosController {
 	 * @return ResponseEntity containing a list of users in the form of {@link UsuariosResponseDto}.
 	 *         If successful, HTTP status 200 (OK) is returned.
 	 */
+	@Operation(
+	    summary = "Get all users",
+	    description = "Retrieves a list of all users with their details (name, email, profile, state).",
+	    responses = {
+	        @ApiResponse(
+	            responseCode = "200",
+	            description = "Successfully retrieved the list of users",
+	            content = @Content(
+	                mediaType = "application/json",
+	                schema = @Schema(implementation = UsuariosResponseDto.class)
+	            )
+	        ),
+	        @ApiResponse(
+	            responseCode = "500",
+	            description = "Internal server error"
+	        )
+	    }
+	)
 	@GetMapping("/usuarios")
 	public ResponseEntity<?> getUsuarios() {
 		List<UsuariosResponseDto> listaDto = new ArrayList<>();
@@ -86,6 +113,35 @@ public class UsuariosController {
 	 *            {@link UsuariosRequestDto}.
 	 * @return ResponseEntity indicating the result of the operation (either conflict or success).
 	 */
+	@Operation(
+	    summary = "Create a new user",
+	    description = "Creates a new user in the system if the provided email is not already in use.",
+	    requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+	        description = "User data to be created",
+	        content = @Content(
+	            mediaType = "application/json",
+	            schema = @Schema(implementation = UsuariosRequestDto.class)
+	        )
+	    ),
+	    responses = {
+	        @ApiResponse(
+	            responseCode = "201",
+	            description = "Successfully created the user",
+	            content = @Content(
+	                mediaType = "application/json",
+	                schema = @Schema(implementation = String.class)
+	            )
+	        ),
+	        @ApiResponse(
+	            responseCode = "409",
+	            description = "Conflict due to email already being in use"
+	        ),
+	        @ApiResponse(
+	            responseCode = "500",
+	            description = "Internal server error"
+	        )
+	    }
+	)
 	@PostMapping("/usuario")
 	public ResponseEntity<?> postUsuario(@RequestBody UsuariosRequestDto dto) {
 		UsuarioModel usuario = this.usuarioService.buscarPorCorreo(dto.getCorreo());
@@ -118,6 +174,43 @@ public class UsuariosController {
 	 *            {@link UsuariosRequestDto}.
 	 * @return ResponseEntity indicating the result of the operation (either not found or success).
 	 */
+	@Operation(
+	    summary = "Update an existing user",
+	    description = "Updates the user's details (name, email, password) by their ID.",
+	    parameters = {
+	        @Parameter(
+	            name = "id",
+	            description = "The ID of the user to update",
+	            required = true,
+	            example = "1"
+	        )
+	    },
+	    requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+	        description = "Updated user data",
+	        content = @Content(
+	            mediaType = "application/json",
+	            schema = @Schema(implementation = UsuariosRequestDto.class)
+	        )
+	    ),
+	    responses = {
+	        @ApiResponse(
+	            responseCode = "200",
+	            description = "Successfully updated the user",
+	            content = @Content(
+	                mediaType = "application/json",
+	                schema = @Schema(implementation = String.class)
+	            )
+	        ),
+	        @ApiResponse(
+	            responseCode = "400",
+	            description = "Bad request due to user not found"
+	        ),
+	        @ApiResponse(
+	            responseCode = "500",
+	            description = "Internal server error"
+	        )
+	    }
+	)
 	@PutMapping("/usuario/{id}")
 	public ResponseEntity<?> putUsuario(@PathVariable ("id") Long id, @RequestBody UsuariosRequestDto dto) {
 		UsuarioModel usuario = this.usuarioService.buscarPorCorreo(dto.getCorreo());

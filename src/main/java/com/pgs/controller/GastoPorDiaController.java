@@ -23,6 +23,13 @@ import com.pgs.service.IComunService;
 import com.pgs.service.IGastoPorDiaService;
 import com.pgs.service.IProveedorService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 
 /**
@@ -35,6 +42,8 @@ import lombok.AllArgsConstructor;
 @RestController
 @RequestMapping("/api/v1")
 @AllArgsConstructor
+@Tag(name = "Daily expenses", description = "API for managing 'Daily Expenses' resources")
+@SecurityRequirement(name = "bearerAuth")
 public class GastoPorDiaController {
 	
 	private IGastoPorDiaService gastoPorDiaService;
@@ -46,6 +55,21 @@ public class GastoPorDiaController {
      *
      * @return ResponseEntity containing a list of daily expenses and HTTP status.
      */
+	@Operation(
+		    summary = "Retrieve all daily expenses for the current month and year",
+		    description = "Fetches all the daily expenses for the current month and year.",
+		    responses = {
+		        @ApiResponse(
+		            responseCode = "200",
+		            description = "Successfully retrieved the list of daily expenses",
+		            content = @Content(
+		                mediaType = "application/json",
+		                schema = @Schema(implementation = GastoPorDiaModel.class)
+		            )
+		        ),
+		        @ApiResponse(responseCode = "500", description = "Internal Server Error")
+		    }
+	)
 	@GetMapping("/gastos-por-dia")
 	public ResponseEntity<?> getAllGastosPorDiaMesEnCurso() {
 		LocalDate fechaActual = LocalDate.now();
@@ -60,6 +84,31 @@ public class GastoPorDiaController {
      * @param dto Data transfer object containing the details of the daily expense to create.
      * @return ResponseEntity with a success or error message and HTTP status.
      */
+	@Operation(
+	    summary = "Create a new daily expense",
+	    description = "Creates a new daily expense entry with the provided details.",
+	    requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+	        description = "DTO containing the details of the daily expense to create",
+	        required = true,
+	        content = @Content(
+	            mediaType = "application/json",
+	            schema = @Schema(implementation = GastoPorDiaDto.class)
+	        )
+	    ),
+	    responses = {
+	        @ApiResponse(
+	            responseCode = "201",
+	            description = "Successfully created the daily expense",
+	            content = @Content(
+	                mediaType = "application/json",
+	                schema = @Schema(implementation = String.class)
+	            )
+	        ),
+	        @ApiResponse(responseCode = "400", description = "Bad request due to invalid data"),
+	        @ApiResponse(responseCode = "404", description = "Provider not found"),
+	        @ApiResponse(responseCode = "500", description = "Internal Server Error")
+	    }
+	)
 	@PostMapping("/gastos-por-dia")
 	public ResponseEntity<?> postGastosPorDiaMesEnCurso(@RequestBody GastoPorDiaDto dto) {
 		ProveedorModel proveedor = this.proveedorService.buscarPorId(dto.getProveedoresId());
@@ -95,6 +144,34 @@ public class GastoPorDiaController {
      * @param dto Data transfer object containing the updated details of the daily expense.
      * @return ResponseEntity with a success or error message and HTTP status.
      */
+	@Operation(
+	    summary = "Update an existing daily expense by its ID",
+	    description = "Updates the details of an existing daily expense identified by the provided ID.",
+	    parameters = {
+	        @Parameter(name = "id", description = "The ID of the daily expense to update", required = true, example = "123")
+	    },
+	    requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+	        description = "DTO containing the updated details of the daily expense",
+	        required = true,
+	        content = @Content(
+	            mediaType = "application/json",
+	            schema = @Schema(implementation = GastoPorDiaDto.class)
+	        )
+	    ),
+	    responses = {
+	        @ApiResponse(
+	            responseCode = "201",
+	            description = "Successfully updated the daily expense",
+	            content = @Content(
+	                mediaType = "application/json",
+	                schema = @Schema(implementation = String.class)
+	            )
+	        ),
+	        @ApiResponse(responseCode = "400", description = "Bad request due to invalid data or missing expense/provider"),
+	        @ApiResponse(responseCode = "404", description = "Daily expense not found or provider not found"),
+	        @ApiResponse(responseCode = "500", description = "Internal Server Error")
+	    }
+	)
 	@PutMapping("/gastos-por-dia/{id}")
 	public ResponseEntity<?> putGastosPorDia(@PathVariable ("id") Long id, @RequestBody GastoPorDiaDto dto) {
 		GastoPorDiaModel gastoPorDiaModel = gastoPorDiaService.buscarPorId(id);
@@ -116,6 +193,25 @@ public class GastoPorDiaController {
      * @param id The ID of the daily expense to delete.
      * @return ResponseEntity with a success or error message and HTTP status.
      */
+	@Operation(
+	    summary = "Delete a daily expense by its ID",
+	    description = "Deletes the daily expense identified by the provided ID.",
+	    parameters = {
+	        @Parameter(name = "id", description = "The ID of the daily expense to delete", required = true, example = "123")
+	    },
+	    responses = {
+	        @ApiResponse(
+	            responseCode = "200",
+	            description = "Successfully deleted the daily expense",
+	            content = @Content(
+	                mediaType = "application/json",
+	                schema = @Schema(implementation = String.class)
+	            )
+	        ),
+	        @ApiResponse(responseCode = "404", description = "Daily expense not found"),
+	        @ApiResponse(responseCode = "500", description = "Internal Server Error")
+	    }
+	)
 	@DeleteMapping("/gastos-por-dia/{id}")
 	public ResponseEntity<?> deleteGastosPorDia(@PathVariable ("id") Long id) {
 		GastoPorDiaModel gastoPorDiaModel = gastoPorDiaService.buscarPorId(id);

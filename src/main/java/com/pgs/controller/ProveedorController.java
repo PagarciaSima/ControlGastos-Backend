@@ -17,6 +17,13 @@ import com.pgs.model.ProveedorModel;
 import com.pgs.service.IComunService;
 import com.pgs.service.IProveedorService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 
 /**
@@ -30,6 +37,8 @@ import lombok.AllArgsConstructor;
 @RestController
 @RequestMapping("/api/v1")
 @AllArgsConstructor
+@Tag(name = "Supplier", description = "API for managing 'Supplier' resources")
+@SecurityRequirement(name = "bearerAuth")
 public class ProveedorController {
 	
 	private IProveedorService proveedorService;
@@ -41,6 +50,21 @@ public class ProveedorController {
      * @return ResponseEntity containing the list of all providers.
      */
 	@GetMapping("/proveedores")
+	@Operation(
+	    summary = "Retrieve all providers",
+	    description = "Fetches a list of all providers from the system.",
+	    responses = {
+	        @ApiResponse(
+	            responseCode = "200",
+	            description = "Successfully retrieved the list of providers",
+	            content = @Content(
+	                mediaType = "application/json",
+	                schema = @Schema(implementation = ProveedorModel.class, type = "array")
+	            )
+	        ),
+	        @ApiResponse(responseCode = "500", description = "Internal Server Error")
+	    }
+	)
 	public ResponseEntity<?> getAllProveedores() {
 		return ResponseEntity.status(HttpStatus.OK).body(this.proveedorService.listar());
 	}
@@ -51,6 +75,25 @@ public class ProveedorController {
      * @param id The ID of the provider to retrieve.
      * @return ResponseEntity containing the provider data if found, or an error message if not found.
      */
+	@Operation(
+	    summary = "Retrieve a provider by its ID",
+	    description = "Fetches a provider from the system by the provided ID.",
+	    parameters = {
+	        @Parameter(name = "id", description = "The ID of the provider to retrieve", required = true, example = "1")
+	    },
+	    responses = {
+	        @ApiResponse(
+	            responseCode = "200",
+	            description = "Successfully retrieved the provider data",
+	            content = @Content(
+	                mediaType = "application/json",
+	                schema = @Schema(implementation = ProveedorModel.class)
+	            )
+	        ),
+	        @ApiResponse(responseCode = "404", description = "Provider not found"),
+	        @ApiResponse(responseCode = "500", description = "Internal Server Error")
+	    }
+	)
 	@GetMapping("/proveedores/{id}")
 	public ResponseEntity<?> getProveedorById(@PathVariable (name = "id") Long id) {
 		ProveedorModel proveedor = this.proveedorService.buscarPorId(id);
@@ -70,6 +113,35 @@ public class ProveedorController {
      * @param dto The provider data transfer object containing the provider's information.
      * @return ResponseEntity indicating the result of the creation process (success or failure).
      */
+	@Operation(
+	    summary = "Create a new provider",
+	    description = "Creates a new provider in the system using the provided data.",
+	    requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+	        description = "Provider data to be created",
+	        content = @Content(
+	            mediaType = "application/json",
+	            schema = @Schema(implementation = ProveedorRequestDto.class)
+	        )
+	    ),
+	    responses = {
+	        @ApiResponse(
+	            responseCode = "201",
+	            description = "Successfully created the provider",
+	            content = @Content(
+	                mediaType = "application/json",
+	                schema = @Schema(implementation = String.class)
+	            )
+	        ),
+	        @ApiResponse(
+	            responseCode = "400",
+	            description = "Bad request due to an unexpected error"
+	        ),
+	        @ApiResponse(
+	            responseCode = "500",
+	            description = "Internal server error"
+	        )
+	    }
+	)
 	@PostMapping("/proveedores")
 	public ResponseEntity<?> postProveedor(@RequestBody ProveedorRequestDto dto) {
 		try {
@@ -90,6 +162,47 @@ public class ProveedorController {
      * @param dto The provider data transfer object containing the updated provider's information.
      * @return ResponseEntity indicating the result of the update process (success or failure).
      */
+	@Operation(
+	    summary = "Update an existing provider",
+	    description = "Updates the provider details by its ID with the new data provided.",
+	    parameters = {
+	        @Parameter(
+	            name = "id",
+	            description = "The ID of the provider to update",
+	            required = true,
+	            example = "1"
+	        )
+	    },
+	    requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+	        description = "Updated provider data",
+	        content = @Content(
+	            mediaType = "application/json",
+	            schema = @Schema(implementation = ProveedorRequestDto.class)
+	        )
+	    ),
+	    responses = {
+	        @ApiResponse(
+	            responseCode = "200",
+	            description = "Successfully updated the provider",
+	            content = @Content(
+	                mediaType = "application/json",
+	                schema = @Schema(implementation = String.class)
+	            )
+	        ),
+	        @ApiResponse(
+	            responseCode = "404",
+	            description = "Provider not found"
+	        ),
+	        @ApiResponse(
+	            responseCode = "400",
+	            description = "Bad request due to an unexpected error"
+	        ),
+	        @ApiResponse(
+	            responseCode = "500",
+	            description = "Internal server error"
+	        )
+	    }
+	)
 	@PutMapping("/proveedores/{id}")
 	public ResponseEntity<?> putProveedor(@PathVariable (name = "id") Long id, @RequestBody ProveedorRequestDto dto) {
 		ProveedorModel proveedor = this.proveedorService.buscarPorId(id);
