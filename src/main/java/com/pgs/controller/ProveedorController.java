@@ -2,6 +2,7 @@ package com.pgs.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +25,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 /**
@@ -143,7 +145,10 @@ public class ProveedorController {
 	    }
 	)
 	@PostMapping("/proveedores")
-	public ResponseEntity<?> postProveedor(@RequestBody ProveedorRequestDto dto) {
+	public ResponseEntity<?> postProveedor(@Valid @RequestBody ProveedorRequestDto dto, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+	        return comunService.getBindingResultError(bindingResult);
+	    }
 		try {
 			this.proveedorService.guardar(new ProveedorModel(dto.getNombre()));
 			return comunService.getResponseEntity(
@@ -204,7 +209,12 @@ public class ProveedorController {
 	    }
 	)
 	@PutMapping("/proveedores/{id}")
-	public ResponseEntity<?> putProveedor(@PathVariable (name = "id") Long id, @RequestBody ProveedorRequestDto dto) {
+	public ResponseEntity<?> putProveedor(
+			@PathVariable (name = "id") Long id, @Valid @RequestBody ProveedorRequestDto dto, BindingResult bindingResult
+	) {
+		if (bindingResult.hasErrors()) {
+	        return comunService.getBindingResultError(bindingResult);
+	    }
 		ProveedorModel proveedor = this.proveedorService.buscarPorId(id);
 		if (proveedor != null) {
 			proveedor.setNombre(dto.getNombre());

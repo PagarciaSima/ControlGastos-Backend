@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +33,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 /**
@@ -143,7 +145,10 @@ public class UsuariosController {
 	    }
 	)
 	@PostMapping("/usuario")
-	public ResponseEntity<?> postUsuario(@RequestBody UsuariosRequestDto dto) {
+	public ResponseEntity<?> postUsuario(@Valid @RequestBody UsuariosRequestDto dto, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+	        return comunService.getBindingResultError(bindingResult);
+	    }
 		UsuarioModel usuario = this.usuarioService.buscarPorCorreo(dto.getCorreo());
 		if (null != usuario)
 			return comunService.getResponseEntity(HttpStatus.CONFLICT, ControlGastosConstants.EMAIL_REPETIDO);
@@ -212,7 +217,12 @@ public class UsuariosController {
 	    }
 	)
 	@PutMapping("/usuario/{id}")
-	public ResponseEntity<?> putUsuario(@PathVariable ("id") Long id, @RequestBody UsuariosRequestDto dto) {
+	public ResponseEntity<?> putUsuario(
+			@PathVariable ("id") Long id, @Valid @RequestBody UsuariosRequestDto dto, BindingResult bindingResult
+		) {
+		if (bindingResult.hasErrors()) {
+	        return comunService.getBindingResultError(bindingResult);
+	    }
 		UsuarioModel usuario = this.usuarioService.buscarPorCorreo(dto.getCorreo());
 		if (null == usuario)
 			return comunService.getResponseEntity(HttpStatus.BAD_REQUEST, ControlGastosConstants.NO_ENCONTRADO);

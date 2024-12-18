@@ -5,6 +5,7 @@ import java.util.Date;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +33,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 /**
@@ -214,8 +216,11 @@ public class GastoFijoController {
 	    }
 	)
 	@PostMapping("/gastos-fijos")
-	public ResponseEntity<?> postGastosFijos(@RequestBody GastosFijosRequestDto dto) {
+	public ResponseEntity<?> postGastosFijos(@Valid @RequestBody GastosFijosRequestDto dto, BindingResult bindingResult) {
 		ProveedorModel proveedor = this.proveedorService.buscarPorId(dto.getProveedoresId());
+		if (bindingResult.hasErrors()) {
+	        return comunService.getBindingResultError(bindingResult);
+	    }
 		if(null == proveedor) {
 			return comunService.getResponseEntity(
 					HttpStatus.NOT_FOUND, 
@@ -296,7 +301,12 @@ public class GastoFijoController {
 	    }
 	)
 	@PutMapping("/gastos-fijos/{id}")
-	public ResponseEntity<?> putGastosFijos(@PathVariable ("id") Long id, @RequestBody GastosFijosRequestDto dto) {
+	public ResponseEntity<?> putGastosFijos(
+			@PathVariable ("id") Long id, @Valid @RequestBody GastosFijosRequestDto dto, BindingResult bindingResult
+	) {
+		if (bindingResult.hasErrors()) {
+	        return comunService.getBindingResultError(bindingResult);
+	    }
 		GastoFijoModel gastosFijos = gastoFijoService.buscarPorId(id);
 		ProveedorModel proveedor = this.proveedorService.buscarPorId(dto.getProveedoresId());
 		if (null == gastosFijos || null == proveedor)

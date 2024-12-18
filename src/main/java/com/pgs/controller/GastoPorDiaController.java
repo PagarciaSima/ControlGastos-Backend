@@ -5,6 +5,7 @@ import java.util.Date;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +31,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 /**
@@ -110,7 +112,10 @@ public class GastoPorDiaController {
 	    }
 	)
 	@PostMapping("/gastos-por-dia")
-	public ResponseEntity<?> postGastosPorDiaMesEnCurso(@RequestBody GastoPorDiaDto dto) {
+	public ResponseEntity<?> postGastosPorDiaMesEnCurso(@Valid @RequestBody GastoPorDiaDto dto, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+	        return comunService.getBindingResultError(bindingResult);
+	    }
 		ProveedorModel proveedor = this.proveedorService.buscarPorId(dto.getProveedoresId());
 		if(null == proveedor) {
 			return comunService.getResponseEntity(
@@ -173,7 +178,12 @@ public class GastoPorDiaController {
 	    }
 	)
 	@PutMapping("/gastos-por-dia/{id}")
-	public ResponseEntity<?> putGastosPorDia(@PathVariable ("id") Long id, @RequestBody GastoPorDiaDto dto) {
+	public ResponseEntity<?> putGastosPorDia(
+			@PathVariable ("id") Long id,@Valid @RequestBody GastoPorDiaDto dto, BindingResult bindingResult
+	) {
+		if (bindingResult.hasErrors()) {
+	        return comunService.getBindingResultError(bindingResult);
+	    }
 		GastoPorDiaModel gastoPorDiaModel = gastoPorDiaService.buscarPorId(id);
 		ProveedorModel proveedor = this.proveedorService.buscarPorId(dto.getProveedoresId());
 		if (null == gastoPorDiaModel || null == proveedor)
