@@ -3,6 +3,7 @@ package com.pgs.controller;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
@@ -197,7 +198,71 @@ public class GastoFijoControllerTest {
     }
     
     
-   
+    @Test
+    void testPutGastosFijos_ActualizacionExitosa() {
+        // Arrange
+        Long id = 1L;
+        GastosFijosRequestDto dto = new GastosFijosRequestDto();
+        dto.setNombre("Actualizado");
+        dto.setMonto(1200L);
+        dto.setProveedoresId(1L);
+        dto.setEstadosId(2L);
 
+        GastoFijoModel gastoExistente = new GastoFijoModel();
+        gastoExistente.setId(id);
+        ProveedorModel proveedor = new ProveedorModel();
+        proveedor.setId(dto.getProveedoresId());
+
+        EstadoModel estado = new EstadoModel();
+        estado.setId(dto.getEstadosId());
+
+        BindingResult bindingResult = new DirectFieldBindingResult(dto, "gastosFijosRequestDto");
+
+        when(gastoFijoService.buscarPorId(id)).thenReturn(gastoExistente);
+        when(proveedorService.buscarPorId(dto.getProveedoresId())).thenReturn(proveedor);
+        when(estadoService.buscarPorId(dto.getEstadosId())).thenReturn(estado);
+        when(comunService.getResponseEntity(HttpStatus.CREATED, ControlGastosConstants.EXITO_CREAR_REGISTRO))
+        .thenAnswer(invocation -> {
+            // Retornar un ResponseEntity<ErrorResponse>
+            return ResponseEntity.status(HttpStatus.CREATED).body(ControlGastosConstants.EXITO_CREAR_REGISTRO);
+        });
+
+
+        // Act
+        ResponseEntity<?> response = gastoFijoController.putGastosFijos(id, dto, bindingResult);
+
+        // Assert
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertEquals(ControlGastosConstants.EXITO_CREAR_REGISTRO, response.getBody());
+    }
+
+    
+    @Test
+    void testDeleteGastosFijos_Exito() {
+        // Arrange
+        Long id = 1L;
+        GastoFijoModel gastoFijo = new GastoFijoModel();
+        gastoFijo.setId(id);
+
+        // Simulamos que el gasto fijo existe
+        when(gastoFijoService.buscarPorId(id)).thenReturn(gastoFijo);
+
+        // Simulamos la respuesta del servicio comun
+        when(comunService.getResponseEntity(HttpStatus.OK, ControlGastosConstants.EXITO_ELIMINAR))
+        .thenAnswer(invocation -> {
+            // Retornar un ResponseEntity<ErrorResponse>
+            return ResponseEntity.ok(ControlGastosConstants.EXITO_ELIMINAR);
+        });
+
+        // Act
+        ResponseEntity<?> response = gastoFijoController.deleteGastosFijos(id);
+
+        // Assert
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(ControlGastosConstants.EXITO_ELIMINAR, response.getBody());
+
+        // Verificamos que el método eliminar fue llamado
+        verify(gastoFijoService).eliminar(id);
+    }
 
 }
