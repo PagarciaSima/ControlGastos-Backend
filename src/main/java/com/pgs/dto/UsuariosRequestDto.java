@@ -24,5 +24,5 @@ public class UsuariosRequestDto {
     @Size(min = 8, max = 20, message = "La contraseña debe tener entre 8 y 20 caracteres.")
     @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[!@#$%^&*])(?=\\S+$).{8,20}$", 
              message = "La contraseña debe contener al menos una letra, un número y un carácter especial.")
-    private String password;;
+    private String password;
 }

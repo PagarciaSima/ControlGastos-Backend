@@ -231,7 +231,7 @@ public class UsuariosController {
 			usuario.setCorreo(dto.getCorreo());
 			usuario.setPassword(this.bCryptPasswordEncoder.encode(dto.getPassword()));
 			this.usuarioService.guardar(usuario);
-			return comunService.getResponseEntity(HttpStatus.CREATED, ControlGastosConstants.EXITO_CREAR_REGISTRO);
+			return comunService.getResponseEntity(HttpStatus.CREATED, ControlGastosConstants.EXITO_ACTUALIZAR_REGISTRO);
 
 		}
 	}

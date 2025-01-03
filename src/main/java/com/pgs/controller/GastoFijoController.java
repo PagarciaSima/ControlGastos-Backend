@@ -152,6 +152,12 @@ public class GastoFijoController {
 	)
 	@GetMapping("/gastos-fijos-por-mes/{mes}")
 	public ResponseEntity<?> getAllGastosFijosPorMes(@PathVariable ("mes") Integer mes) {
+		if(mes <1 || mes >12) {
+			return comunService.getResponseEntity(
+					HttpStatus.NOT_FOUND, 
+					"El mes introducido no es válido");
+		
+		}
 		LocalDate fechaActual = LocalDate.now();
 		return ResponseEntity
 				.status(HttpStatus.OK)

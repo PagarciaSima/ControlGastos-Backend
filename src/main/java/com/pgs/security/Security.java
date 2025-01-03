@@ -1,5 +1,7 @@
 package com.pgs.security;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -57,25 +59,32 @@ public class Security {
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-	    return http
-	            .csrf(csrf -> csrf.disable())  // Deshabilitar CSRF (si es necesario)
-	            .authorizeHttpRequests(authz -> authz
-	                .requestMatchers("/api/auth/**").permitAll()  // Rutas públicas (login, registro, etc.)
-                    .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs", "/v3/api-docs/**", "/actuator/**").permitAll()  // Permite Swagger y OpenAPI sin autenticación
-	                .requestMatchers("/api/v1/**").authenticated()  // Rutas protegidas
-	            )
-	            .sessionManagement(session -> session
-	                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)  // Sesiones sin estado
-	            )
-	            .exceptionHandling(exceptions -> exceptions
-	                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))  // Manejo de errores
-	            )
-	            .authenticationProvider(authenticationProvider())  // Proveedor de autenticación
-	            .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)  // Filtro de autenticación
-	            .build();
-	    
-	    
-	}
+        return http
+            .csrf(csrf -> csrf.disable()) // Deshabilitar CSRF si no es necesario
+            .cors(cors -> cors.configurationSource(request -> {
+                var corsConfig = new org.springframework.web.cors.CorsConfiguration();
+                corsConfig.setAllowedOrigins(List.of("*")); // Permitir todos los orígenes
+                corsConfig.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Métodos permitidos
+                corsConfig.setAllowedHeaders(List.of("Authorization", "Content-Type")); // Headers permitidos
+                corsConfig.setExposedHeaders(List.of("Authorization")); // Headers expuestos
+                return corsConfig;
+            }))
+            .authorizeHttpRequests(authz -> authz
+                .requestMatchers("/api/auth/**").permitAll() // Rutas públicas
+                .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs", "/v3/api-docs/**", "/actuator/**").permitAll()
+                .requestMatchers("/api/v1/**").authenticated() // Rutas protegidas
+            )
+            .sessionManagement(session -> session
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // Sesión sin estado
+            )
+            .exceptionHandling(exceptions -> exceptions
+                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+            )
+            .authenticationProvider(authenticationProvider())
+            .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
+            .build();
+    }
+
 
 	
 
