@@ -1,0 +1,606 @@
+{
+	"info": {
+		"_postman_id": "7c40e745-c2b0-4cf1-a08e-df339462dc1a",
+		"name": "Control de gastos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27783092"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"correo\": \"pgs@hotmail.com\",\r\n    \"password\": \"patata\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/api/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getEstados",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwZ3NAaG90bWFpbC5jb20iLCJpYXQiOjE3MzQ1MjY4ODYsImV4cCI6MTczNTEzMTY4Nn0.T5YgGjZwZHKupQqDkMjWldS_AK_lxNX-K9Un5a21JPs7C8YA1ewPZFU9NY5BLqZjV_UgjuJVXF9WPPuX02RxGA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/api/v1/estados",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"estados"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getEstados-Gastos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/api/v1/estados-gastos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"estados-gastos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getProveedores",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwZ3NAaG90bWFpbC5jb20iLCJpYXQiOjE3MzQ2MTEzNDYsImV4cCI6MTczNTIxNjE0Nn0.y9748Vt8ulmdqVSAQWBmqZ9hjeEWyYIsLLbFlElDOsCS1FqrOv6FFsDhCSXvXown7iKBIlixCErDTDe7Ru4gEQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/api/v1/proveedores",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"proveedores"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getProveedorById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/api/v1/proveedores/8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"proveedores",
+						"8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getGastosFijosMesEnCurso",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/api/v1/gastos-fijos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"gastos-fijos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getGastosFijosPorMes",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwZ3NAaG90bWFpbC5jb20iLCJpYXQiOjE3MzQ1MjgzNTgsImV4cCI6MTczNTEzMzE1OH0.J3Cx-bbAqJxJiAvr_7cUO_47J_pLK2AMgwexEd48SIesp23I23xdsJvy5u8HtPdvC_NG33lChTGYx-dyEBMISw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/api/v1/gastos-fijos-por-mes/11",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"gastos-fijos-por-mes",
+						"11"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getGastosPorDiaMes",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqZ3NAaG90bWFpbC5jb20iLCJpYXQiOjE3MzQ4ODI3MzksImV4cCI6MTczNTQ4NzUzOX0.y7rE-nhT1KUIndncJJGuIWcO_F1FXcLkuPgktCrnzNEVC_9ceiCc2B8LU469Ch0VwvxIR_Z91tbAZzhF3G1r_w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/api/v1/gastos-por-dia",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"gastos-por-dia"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getUsuarios",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwZ3NAaG90bWFpbC5jb20iLCJpYXQiOjE3MzQzNjU0MTAsImV4cCI6MTczNDk3MDIxMH0.4tz98Qz3hcunHlridFbEnJrI3a2hUYiUehB6HmSxRQioDcGMgLVzRZIh15SgQuNGxWmc-5g1uLv08ketn6ozPA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/api/v1/usuarios",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostUsuario",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Juan Pérez\",\r\n    \"correo\": \"jgs@hotmail.com\",\r\n    \"password\": \"patata\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/api/v1/usuario",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"usuario"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostProveedor",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqZ3NAaG90bWFpbC5jb20iLCJpYXQiOjE3MzQ2NDE0MTYsImV4cCI6MTczNTI0NjIxNn0.nBplVhQNzR22Z5E0vCDRc0KIlzMVH0zSw_e5Nhh7z8EWOJJ1TZ9KFANgeU1c_je4ecKhnKUoCdYRmuZZRjrnlQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Proveedor desde Postman\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/api/v1/proveedores",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"proveedores"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostGastoFijo",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwZ3NAaG90bWFpbC5jb20iLCJpYXQiOjE3MzQ1Mjc4OTgsImV4cCI6MTczNTEzMjY5OH0.KbP3xhnUd925u9CcINRvhB77vfCAQckSMAgrhZ0b3LAQrYy4j7xrGgBBKLSV65_DFe4EEjJwNKcC8jJ4lcJcjw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"nombre\": \"\",\r\n        \"monto\": 8000,\r\n        \"proveedoresId\": 2,\r\n        \"estadosId\": 3\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/api/v1/gastos-fijos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"gastos-fijos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostGastoPorDia",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwZ3NAaG90bWFpbC5jb20iLCJpYXQiOjE3MzQ1Mjg3NDgsImV4cCI6MTczNTEzMzU0OH0.0pzjLrfb2Xh6VYlnFZmlF4pcVhsJQ1or5z2sM4UfgKFmxG2O1Bpk17GPtiGtuG5p6f3F0RXq_qnm41BOBjBMwA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"neto\": -1,\r\n        \"iva\": -1,\r\n        \"total\": 200,\r\n        \"descripcion\": \"Notebook gammer\",\r\n        \"proveedoresId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/api/v1/gastos-por-dia",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"gastos-por-dia"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteGastoPorDia",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"id\": 6,\r\n        \"nombre\": \"Papelería y oficina\",\r\n        \"monto\": 120,\r\n        \"fecha\": 1733498400000,\r\n        \"estadosId\": {\r\n            \"id\": 4,\r\n            \"nombre\": \"No pagado\"\r\n        },\r\n        \"proveedoresId\": {\r\n            \"id\": 5,\r\n            \"nombre\": \"Proveedor desde Postman actualizado\"\r\n        }\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/api/v1/gastos-por-dia/9",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"gastos-por-dia",
+						"9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteGastoFijo",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"id\": 6,\r\n        \"nombre\": \"Papelería y oficina\",\r\n        \"monto\": 120,\r\n        \"fecha\": 1733498400000,\r\n        \"estadosId\": {\r\n            \"id\": 4,\r\n            \"nombre\": \"No pagado\"\r\n        },\r\n        \"proveedoresId\": {\r\n            \"id\": 5,\r\n            \"nombre\": \"Proveedor desde Postman actualizado\"\r\n        }\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/api/v1/gastos-fijos/7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"gastos-fijos",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PutUsuario",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwZ3NAaG90bWFpbC5jb20iLCJpYXQiOjE3MzQ0MjE4NDcsImV4cCI6MTczNTAyNjY0N30.1jMUKu5b_Suawto5pYEUouzM2xKdnIIxqDqOSc6rN1CrVXyYLmXVIdnCQDCPYx0YOwwQQOk4j7vo21b5_EGStQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Juan Pérez edited\",\r\n    \"correo\": \"jgs@hotmail.com\",\r\n    \"password\": \"patata\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/api/v1/usuario/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"usuario",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PutGastoPorDia",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"neto\": 150,\r\n        \"iva\": 21,\r\n        \"total\": 200,\r\n        \"descripcion\": \"Notebook gammer\",\r\n        \"proveedoresId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/api/v1/gastos-por-dia/10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"gastos-por-dia",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PutGastoFijo",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"nombre\": \"Compra de suministros edited 22\",\r\n        \"monto\": 8000,\r\n        \"proveedoresId\": 2,\r\n        \"estadosId\": 3\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/api/v1/gastos-fijos/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"gastos-fijos",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "putProveedor",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Proveedor desde Postman actualizado\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/api/v1/proveedores/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"proveedores",
+						"5"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
