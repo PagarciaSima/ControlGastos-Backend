@@ -3,6 +3,12 @@
 This is a full-stack application for managing fixed and daily expenses, built with a Java Spring Boot backend and an Angular 17 frontend. The application allows users to manage their expenses, create providers, and manage user access based on roles (admin). Users can log in, register, and perform CRUD operations on expenses and users.
 ---
 
+## Frontend Repository
+
+The frontend of the application is built with Angular and can be found in the following repository:
+
+[Frontend Repository - Angular](https://github.com/PagarciaSima/ControlGastos-Frontend)
+
 ## Features
 
  **Fixed Expense Management**: Allows users to add, edit, and delete fixed expenses.
