@@ -76,7 +76,7 @@ The frontend of the application is built with Angular and can be found in the fo
 
 ## Database and Postman Collection
 
-- The **database** and the **Postman collection** are located in the `utils` folder of the project.
+- The **database** and the **Postman collection** are located in the `Extras` folder of the project.
   - The database can be imported into your local database system for testing.
   - The Postman collection can be used to test the endpoints of the API.
 
@@ -97,4 +97,4 @@ The application has two users with different roles. You can use the following cr
    - **Role**: Administrator (full access to all features, including user management).
 
 ## Demo
-[Link to video Demo](https://www.youtube.com/watch?v=WjJQ25zMDQE)
+[Link to video Demo](https://www.youtube.com/watch?v=rbbNK8HQ5IY)

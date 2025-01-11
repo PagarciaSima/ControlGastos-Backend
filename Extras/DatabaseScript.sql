@@ -69,7 +69,7 @@ CREATE TABLE `gastos_fijos` (
 
 LOCK TABLES `gastos_fijos` WRITE;
 /*!40000 ALTER TABLE `gastos_fijos` DISABLE KEYS */;
-INSERT INTO `gastos_fijos` VALUES (2,'2025-01-02 12:30:00.000000',300,'Pago de servicios',2,3),(3,'2025-01-02 12:30:00.000000',1000,'Adquisición de equipos',3,1),(5,'2025-01-02 12:30:00.000000',750,'Alquiler mensual',3,2),(17,'2025-01-02 12:30:00.000000',1000,'prueba 23',4,8),(19,'2025-01-02 12:30:00.000000',2000,'prueba 11222',4,8),(20,'2025-01-02 12:30:00.000000',10000,'asas222',4,10),(21,'2025-01-02 06:21:19.147000',11,'asas',4,9);
+INSERT INTO `gastos_fijos` VALUES (2,'2025-01-02 12:30:00.000000',300,'Pago de servicios',2,3),(3,'2025-01-02 12:30:00.000000',1000,'Adquisición de equipos',3,1),(5,'2025-01-02 12:30:00.000000',750,'Alquiler mensual',3,2);
 /*!40000 ALTER TABLE `gastos_fijos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -148,7 +148,7 @@ CREATE TABLE `proveedores` (
 
 LOCK TABLES `proveedores` WRITE;
 /*!40000 ALTER TABLE `proveedores` DISABLE KEYS */;
-INSERT INTO `proveedores` VALUES (1,'Proveedor 1'),(2,'Proveedor 2'),(3,'Proveedor 3 Pablo García'),(4,'Proveedor 4'),(5,'Energía Plus S.L'),(6,'AutoMecánica Rápida'),(7,'Telefonía Global'),(8,'Distribuidora Office Pro'),(9,'fffffassa'),(10,'1222');
+INSERT INTO `proveedores` VALUES (1,'Proveedor 1'),(2,'Proveedor 2'),(3,'Proveedor 3'),(4,'Proveedor 4'),(5,'Energía Plus S.L'),(6,'AutoMecánica Rápida'),(7,'Telefonía Global'),(8,'Distribuidora Office Pro'),(9,'Proveedor 5'),(10,'Proveedor 6');
 /*!40000 ALTER TABLE `proveedores` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -182,7 +182,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,'pgs@hotmail.com','2024-12-16 16:29:42.000000','Pablo García Simavilla','$2a$12$iq70WgaEhs.wdM.2z/OoceKp6o/Ixjsi1TpK/JZuKzstlxW528lH.',NULL,1,1),(2,'jgs@hotmail.com','2024-12-16 17:25:59.469000','Juan Pérez edited','$2a$10$VpSq54i5p7nevxUTXLu31eHwxVtgB1pKH4zzA9cr5s3H6gfIHaSAq','',1,2),(3,'prueba@hotmail.com','2024-12-20 12:39:23.402000','prueba1','$2a$10$z4Rvu6JXOaNS7uNIdIr8KeDiFeSvvkCVCY2VWQyqzZD.uhm/cqpMG','',1,2),(4,'pg2@hotmail.com','2024-12-20 13:12:17.267000','prueba2','$2a$10$04J63jnXoHSuplPE7Yhk/.vKoF84AI9j2mQFXnVWnCWdmtL.Jie8q','',1,2),(5,'mgs@hotmail.com','2024-12-20 13:15:21.071000','María García','$2a$10$DbzTGKViigjNpm1rG13nDu5PvHsp9qP9kM18c/1C5KJCKJBIFax.W','',1,2),(6,'prueba4@hotmail.com','2024-12-20 13:17:21.706000','prueba4','$2a$10$UoBtr5PSrrNITcfNOmxeoujJBQuNxluWUaF2hyF5nT8Kt4K2x878m','',1,2);
+INSERT INTO `usuarios` VALUES (1,'pgs@hotmail.com','2024-12-16 16:29:42.000000','Pablo García Simavilla','$2a$12$iq70WgaEhs.wdM.2z/OoceKp6o/Ixjsi1TpK/JZuKzstlxW528lH.',NULL,1,1),(2,'jgs@hotmail.com','2024-12-16 17:25:59.469000','Juan Pérez edited','$2a$10$VpSq54i5p7nevxUTXLu31eHwxVtgB1pKH4zzA9cr5s3H6gfIHaSAq','',1,2),(5,'mgs@hotmail.com','2024-12-20 13:15:21.071000','María García','$2a$10$DbzTGKViigjNpm1rG13nDu5PvHsp9qP9kM18c/1C5KJCKJBIFax.W','',1,2);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -220,4 +220,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-01-03  6:13:21
+-- Dump completed on 2025-01-11 17:56:01
